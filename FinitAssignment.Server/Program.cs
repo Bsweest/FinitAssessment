@@ -2,9 +2,9 @@ using FinitAssignment.Server;
 using Serilog;
 
 // I anticipate this little project will take about 3, 4 hours, but that is not realistic with all the requirements.
-// I'm not ready to spend more time so I can only scaffold the project structure and show you my understanding of the technologies and my skillsets with some example.
-// If you sastify with this, I would love an opportunity to discuss more about my technical background
-// If you don't think the assessment is done, send me an email and I will try to finish the work
+// I'm not ready to spend more time so I can only scaffold the project structure and show you my understanding of the technologies and my skill sets with some examples.
+// If you are satisfied with this, I would love an opportunity to discuss more about my technical background
+// But if you don't think the assessment is done, send me an email and I will try to finish the work
 
 Log.Logger = new LoggerConfiguration()
 #if DEBUG
