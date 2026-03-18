@@ -1,23 +1,50 @@
-﻿using FinitAssignment.Server.EntityFrameworkCore;
+﻿using FinitAssignment.Server.Categories;
+using FinitAssignment.Server.EntityFrameworkCore;
+using FinitAssignment.Server.HostedServices;
+using FinitAssignment.Server.Products;
 using Serilog;
 
 namespace FinitAssignment.Server;
 
 public static class AppConfigurator
 {
-    public static IServiceCollection ConfigureServices(IServiceCollection services, IConfigurationManager configuration)
+    public static IServiceCollection ConfigureServices(
+        IServiceCollection services,
+        IConfigurationManager configuration
+    )
     {
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddSerilog();
-        services.AddSqlServer<ProductCatalogDbContext>(configuration.GetConnectionString("Default"));
+        services.AddSqlServer<ProductCatalogDbContext>(
+            configuration.GetConnectionString("Default")
+        );
+        services.AddProblemDetails().AddExceptionHandler<ApiGlobalExceptionHandler>();
+        services.AddHostedService<SeedDataHost>();
 
+        services.AddSingleton<IFileProvider, LocalFileProvider>();
 
         return services;
     }
 
     public static WebApplication MapEndpoints(WebApplication app)
     {
+        var productsEndpont = app.MapGroup("/api/products");
+        productsEndpont.MapGet("/", ProductController.QueryAsync).WithName("Query Products");
+        productsEndpont.MapPost("/", ProductController.CreateAsync)
+            .DisableAntiforgery()
+            .WithName("Create Product");
+        productsEndpont.MapPatch("/{id}", ProductController.UpdateAsync)
+            .DisableAntiforgery()
+            .WithName("Update Product");
+        productsEndpont.MapDelete("/{id}", ProductController.DeleteAsync).WithName("Delete Product");
+        productsEndpont.MapGet("/{id}", ProductController.GetAsync).WithName("Get Product");
+
+        var categoriesEndpoint = app.MapGroup("/api/categories");
+        categoriesEndpoint.MapGet("/", CategoryController.QueryAllAsync).WithName("Query Categories");
+        categoriesEndpoint.MapPost("/", CategoryController.CreateAsync).WithName("Create Category");
+        categoriesEndpoint.MapPatch("/{id}", CategoryController.UpdateAsync).WithName("Update Category");
+        categoriesEndpoint.MapGet("/{id}", CategoryController.GetAsync).WithName("Get Category");
 
         return app;
     }

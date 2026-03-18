@@ -1,5 +1,4 @@
 ﻿using FinitAssignment.Server.Categories;
-using FinitAssignment.Server.Extensions;
 using FinitAssignment.Server.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -11,6 +10,10 @@ public class ProductCatalogDbContext(
     IEnumerable<IInterceptor> interceptors
 ) : DbContext(options)
 {
+    public DbSet<Product> Products { get; init; }
+
+    public DbSet<Category> Categories { get; init; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder.AddInterceptors(interceptors));
@@ -21,12 +24,13 @@ public class ProductCatalogDbContext(
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Product>(b =>
         {
-            b.Property(e => e.CustomAttribute).HasColumnType("nvarchar(max)");
-            b.DefaultQueryFilter();
+            b.Property(e => e.CustomAttributes).HasColumnType("nvarchar(max)");
+            b.Property(e => e.Price).HasColumnType("decimal(18,2)");
+            b.HasQueryFilter(e => e.DeletedAt == null);
         });
         modelBuilder.Entity<Category>(b =>
         {
-            b.DefaultQueryFilter();
+            b.HasIndex(e => e.Name).IsUnique();
         });
     }
 }

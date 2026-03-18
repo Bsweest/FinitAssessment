@@ -3,5 +3,6 @@
     <Build />
     <Deploy />
   </Project>
+  <Project Path="FinitAssignment.Server.Tests/FinitAssignment.Server.Tests.csproj" Id="01622fbb-0beb-4b90-b7a2-9ee0ef8aa599" />
   <Project Path="FinitAssignment.Server/FinitAssignment.Server.csproj" />
 </Solution>

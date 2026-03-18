@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from "node:url";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
 import { defineConfig } from "vite";
 import plugin from "@vitejs/plugin-react";
@@ -50,7 +51,7 @@ const target = env.ASPNETCORE_HTTPS_PORT
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [plugin(), tailwindcss()],
+  plugins: [tanstackRouter(), plugin(), tailwindcss()],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -58,7 +59,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "^/weatherforecast": {
+      "^/api": {
         target,
         secure: false,
       },

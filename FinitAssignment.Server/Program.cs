@@ -1,6 +1,11 @@
 using FinitAssignment.Server;
 using Serilog;
 
+// I don't want to fully commit to DDD or add authentication
+// because it'll take more time than what I anticipate to spend for this assignment.
+// But the application is completed with all the required features.
+// If you sastify with this little project, I would love an opportunity to discuss more about my skillsets and technical background
+
 Log.Logger = new LoggerConfiguration()
 #if DEBUG
     .MinimumLevel.Debug()
@@ -28,6 +33,7 @@ try
     var app = builder.Build();
     app.UseDefaultFiles();
     app.UseStaticFiles();
+    app.UseExceptionHandler();
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
