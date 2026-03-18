@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="finitassignment.client/finitassignment.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="FinitAssignment.Server/FinitAssignment.Server.csproj" />
+</Solution>
