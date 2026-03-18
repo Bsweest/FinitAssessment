@@ -1,10 +1,9 @@
 using FinitAssignment.Server;
 using Serilog;
 
-// I don't want to fully commit to DDD or add authentication
-// because it'll take more time than what I anticipate to spend for this assignment.
-// But the application is completed with all the required features.
-// If you sastify with this little project, I would love an opportunity to discuss more about my skillsets and technical background
+// I anticipate this little project will take about 3, 4 hours, but that is not realistic with all the requirements.
+// So I can only scaffold the project structure and show you my understanding of the technologies and my skillsets with some example.
+// If you sastify with this, I would love an opportunity to discuss more about my skillsets and technical background
 
 Log.Logger = new LoggerConfiguration()
 #if DEBUG
