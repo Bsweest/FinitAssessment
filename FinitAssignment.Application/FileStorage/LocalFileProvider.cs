@@ -1,4 +1,6 @@
-﻿namespace FinitAssignment;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace FinitAssignment.FileStorage;
 
 public interface IFileProvider
 {

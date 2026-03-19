@@ -102,7 +102,7 @@ function RouteComponent() {
         </div>
       </header>
       <div className="flex flex-row justify-end px-10 pt-2">
-        <CreateProductButton />
+        <CreateProductButton refetch={refetch} />
       </div>
 
       {/* ── Filter Bar ── */}

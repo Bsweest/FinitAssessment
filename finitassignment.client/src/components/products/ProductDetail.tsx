@@ -2,12 +2,15 @@ import { useState } from "react";
 import { CategoryDto, ProductDto } from "../../client/types.gen";
 import {
   CreateUpdateProductDto,
-  UpdateProductDialog,
-} from "./UpdateProductDialog";
+  CreateUpdateProductDialog,
+} from "./CreateUpdateProductDialog";
+import { deleteProduct } from "../../client/sdk.gen";
+import { useNavigate } from "@tanstack/react-router";
 
 type Props = ProductDto & { mutate: (data: CreateUpdateProductDto) => void };
 
 export default function ProductDetailPage({
+  id,
   name,
   description,
   price,
@@ -16,7 +19,22 @@ export default function ProductDetailPage({
   customAttributes,
   mutate,
 }: Props) {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+
+  async function onDelete() {
+    const confirmed = confirm("Do you want to delete this product");
+    if (confirmed) {
+      const { error } = await deleteProduct({
+        path: { id },
+      });
+
+      if (!error) {
+        alert(`Product ${name} has been delete`);
+        navigate({ to: "/" });
+      }
+    }
+  }
 
   return (
     <>
@@ -130,6 +148,13 @@ export default function ProductDetailPage({
                   Update
                 </button>
 
+                <button
+                  onClick={onDelete}
+                  className="w-full bg-red-500 py-4 rounded-xl font-medium text-sm tracking-wide border border-stone-700 text-stone-300 hover:border-stone-500 hover:text-stone-100 transition-colors"
+                >
+                  Delete
+                </button>
+
                 <button className="w-full py-4 rounded-xl font-medium text-sm tracking-wide border border-stone-700 text-stone-300 hover:border-stone-500 hover:text-stone-100 transition-colors">
                   Buy now
                 </button>
@@ -168,7 +193,7 @@ export default function ProductDetailPage({
         </main>
       </div>
 
-      <UpdateProductDialog
+      <CreateUpdateProductDialog
         open={open}
         onClose={() => setOpen(false)}
         onSave={(data) => mutate(data)}

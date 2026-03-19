@@ -1,5 +1,8 @@
-﻿using FinitAssignment.EntityFrameworkCore;
+﻿using FinitAssignment.Categories;
+using FinitAssignment.EntityFrameworkCore;
 using FinitAssignment.Extensions;
+using FinitAssignment.FileStorage;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -48,7 +51,7 @@ public static class ProductController
     {
         var skip = (page ?? 1) - 1;
 
-        IQueryable<Product> products = dbContext.Products;
+        IQueryable<Product> products = dbContext.Products.Where(product => product.Category!.IsActive);
 
         if (description is not null)
         {

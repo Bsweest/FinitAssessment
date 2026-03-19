@@ -31,7 +31,12 @@ type Props = {
 
 type Errors = { [id in keyof CreateUpdateProductDto]?: string };
 
-export function UpdateProductDialog({ product, open, onClose, onSave }: Props) {
+export function CreateUpdateProductDialog({
+  product,
+  open,
+  onClose,
+  onSave,
+}: Props) {
   const { data: categories } = useQuery({
     queryKey: [queryCategories.name],
     queryFn: async ({ signal }) => {
@@ -47,8 +52,8 @@ export function UpdateProductDialog({ product, open, onClose, onSave }: Props) {
     description: product.description ?? "",
     price: product.price ?? 0,
     imagePath: product.imagePath ?? null,
-    categoryId: product.categoryId ?? null,
-    customAttributes: product.customAttributes ?? null,
+    categoryId: product.categoryId ?? 1,
+    customAttributes: product.customAttributes ?? "{}",
     Image: undefined as File | undefined,
   });
   const [errors, setErrors] = useState<Errors>({});
@@ -64,7 +69,7 @@ export function UpdateProductDialog({ product, open, onClose, onSave }: Props) {
         description: product.description ?? "",
         price: product.price ?? 0,
         imagePath: product.imagePath ?? null,
-        categoryId: product.categoryId ?? null,
+        categoryId: product.categoryId ?? 1,
         customAttributes: product.customAttributes ?? null,
         Image: undefined,
       });

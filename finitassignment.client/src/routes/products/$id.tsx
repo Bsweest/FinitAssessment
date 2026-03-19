@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { getProduct, updateProduct } from "../../client/sdk.gen";
 import { throwErrorMessage } from "../../utils";
 import ProductDetailPage from "../../components/products/ProductDetail";
-import { CreateUpdateProductDto } from "../../components/products/UpdateProductDialog";
+import { CreateUpdateProductDto } from "../../components/products/CreateUpdateProductDialog";
 
 export const Route = createFileRoute("/products/$id")({
   component: RouteComponent,

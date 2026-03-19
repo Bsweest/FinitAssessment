@@ -2,10 +2,13 @@
   <Folder Name="/Solution Items/">
     <File Path="Directory.Build.Props" />
   </Folder>
+  <Project Path="FinitAssignment.Application.Contracts/FinitAssignment.Application.Contracts.csproj" Id="43d5383f-5164-4b03-9875-3794de41e147" />
+  <Project Path="FinitAssignment.Application/FinitAssignment.Application.csproj" Id="d413625e-9a67-4230-a00d-7732c30ead4c" />
   <Project Path="finitassignment.client/finitassignment.client.esproj">
     <Build />
     <Deploy />
   </Project>
   <Project Path="FinitAssignment.Domain/FinitAssignment.Domain.csproj" Id="83b756be-412c-4500-9fb7-ef5b15a1c241" />
+  <Project Path="FinitAssignment.EntityFrameworkCore/FinitAssignment.EntityFrameworkCore.csproj" Id="b8f60787-4a6e-48bf-9fa2-7779a971607f" />
   <Project Path="FinitAssignment.Server/FinitAssignment.Server.csproj" />
 </Solution>

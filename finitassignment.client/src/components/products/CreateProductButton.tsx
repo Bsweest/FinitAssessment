@@ -1,13 +1,14 @@
 import { useState } from "react";
 import {
   CreateUpdateProductDto,
-  UpdateProductDialog,
-} from "./UpdateProductDialog";
+  CreateUpdateProductDialog,
+} from "./CreateUpdateProductDialog";
 import { useMutation } from "@tanstack/react-query";
 import { createProduct } from "../../client/sdk.gen";
 
-export function CreateProductButton() {
+export function CreateProductButton({ refetch }: { refetch: () => void }) {
   const [open, setOpen] = useState(false);
+  const [key, setKey] = useState(1);
 
   const { mutate } = useMutation({
     mutationFn: async (form: CreateUpdateProductDto) => {
@@ -15,6 +16,10 @@ export function CreateProductButton() {
         body: form,
       });
       if (error) alert(JSON.stringify(error));
+      else {
+        refetch();
+        setKey((prev) => ++prev);
+      }
     },
   });
 
@@ -27,7 +32,8 @@ export function CreateProductButton() {
         Add Product
       </button>
 
-      <UpdateProductDialog
+      <CreateUpdateProductDialog
+        key={key}
         open={open}
         onClose={() => setOpen(false)}
         onSave={(data) => mutate(data)}
@@ -36,7 +42,7 @@ export function CreateProductButton() {
           description: "",
           name: "",
           price: 0,
-          categoryId: undefined,
+          categoryId: 1,
           Image: undefined,
           imagePath: undefined,
         }}

@@ -1,5 +1,6 @@
 ﻿using FinitAssignment.Categories;
 using FinitAssignment.EntityFrameworkCore;
+using FinitAssignment.FileStorage;
 using FinitAssignment.HostedServices;
 using FinitAssignment.Products;
 using Serilog;
