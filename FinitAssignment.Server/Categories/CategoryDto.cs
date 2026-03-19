@@ -1,4 +1,4 @@
-﻿namespace FinitAssignment.Server.Categories;
+﻿namespace FinitAssignment.Categories;
 
 public class CategoryDto
 {

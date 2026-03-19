@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace FinitAssignment.Server.EntityFrameworkCore;
+namespace FinitAssignment.EntityFrameworkCore;
 
 public class SoftDeleteInterceptor(RequestContext requestContext) : SaveChangesInterceptor
 {

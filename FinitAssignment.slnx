@@ -1,8 +1,11 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.Props" />
+  </Folder>
   <Project Path="finitassignment.client/finitassignment.client.esproj">
     <Build />
     <Deploy />
   </Project>
-  <Project Path="FinitAssignment.Server.Tests/FinitAssignment.Server.Tests.csproj" Id="01622fbb-0beb-4b90-b7a2-9ee0ef8aa599" />
+  <Project Path="FinitAssignment.Domain/FinitAssignment.Domain.csproj" Id="83b756be-412c-4500-9fb7-ef5b15a1c241" />
   <Project Path="FinitAssignment.Server/FinitAssignment.Server.csproj" />
 </Solution>

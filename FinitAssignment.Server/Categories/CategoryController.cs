@@ -1,8 +1,8 @@
-﻿using FinitAssignment.Server.EntityFrameworkCore;
+﻿using FinitAssignment.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinitAssignment.Server.Categories;
+namespace FinitAssignment.Categories;
 
 public static class CategoryController
 {

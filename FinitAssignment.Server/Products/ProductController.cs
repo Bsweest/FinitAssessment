@@ -1,11 +1,10 @@
-﻿using FinitAssignment.Server.Categories;
-using FinitAssignment.Server.EntityFrameworkCore;
-using FinitAssignment.Server.Extensions;
+﻿using FinitAssignment.EntityFrameworkCore;
+using FinitAssignment.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace FinitAssignment.Server.Products;
+namespace FinitAssignment.Products;
 
 public static class ProductController
 {
@@ -36,31 +35,28 @@ public static class ProductController
             UpdatedAt = product.UpdatedAt,
         };
 
-    public static IAsyncEnumerable<ProductDto> QueryAsync(
+    public static async Task<GetProductsDto> QueryAsync(
         [FromQuery] int? page,
-        [FromQuery] string? name,
         [FromQuery] string? description,
         [FromQuery] decimal? minPrice,
         [FromQuery] decimal? maxPrice,
         [FromQuery] string? customAttributes,
-        [FromQuery] string? category,
-        [FromServices] ProductCatalogDbContext dbContext
+        [FromQuery] int? category,
+        [FromServices] ProductCatalogDbContext dbContext,
+        CancellationToken ct
     )
     {
         var skip = (page ?? 1) - 1;
 
         IQueryable<Product> products = dbContext.Products;
 
-        if (name is not null)
-        {
-            products = products.Where(product =>
-                product.NormalizedName.Contains(name.ToNormalized())
-            );
-        }
         if (description is not null)
         {
+            var filter = description.ToNormalized();
+
             products = products.Where(product =>
-                product.NormalizedDescription.Contains(description.ToNormalized())
+                product.NormalizedName.Contains(filter)
+                || product.NormalizedDescription.Contains(filter)
             );
         }
         if (minPrice is not null)
@@ -80,15 +76,20 @@ public static class ProductController
         if (category is not null)
         {
             products = products.Where(product =>
-                product.Category != null
-                && product.Category.NormalizedName.Contains(category.ToNormalized())
+                product.Category != null && product.Category.Id == category
             );
         }
 
-        return products.Select(MapToDto)
-            .Take(24)
-            .Skip(skip)
-            .AsAsyncEnumerable();
+        return new GetProductsDto
+        {
+            Count = await products.CountAsync(ct),
+            Items = products
+                .Select(MapToDto)
+                .OrderByDescending(product => product.Id)
+                .Skip(skip * 12)
+                .Take(12)
+                .AsAsyncEnumerable(),
+        };
     }
 
     public static async Task<ProductDto> GetAsync(
@@ -106,7 +107,7 @@ public static class ProductController
 
     public static async Task UpdateAsync(
         int id,
-        [FromForm] CreateUpdateProductDto data,
+        [AsParameters] CreateUpdateProductDto data,
         IFileProvider fileProvider,
         [FromServices] ProductCatalogDbContext dbContext,
         CancellationToken ct
@@ -119,6 +120,7 @@ public static class ProductController
         product.Name = data.Name;
         product.Description = data.Description;
         product.Price = data.Price;
+        product.ImagePath = data.ImagePath;
         product.Category =
             await dbContext.Categories.FirstOrDefaultAsync(
                 e => e.Id == data.CategoryId,
@@ -132,7 +134,7 @@ public static class ProductController
             if (!image.IsImage(out var ext))
                 throw new BussinessException("Uploaded file is not an image");
 
-            var path = $"/file-storage/products/{id}/packshot.{ext}";
+            var path = $"/file-storage/products/{id}/packshot{ext}";
             await fileProvider.SaveAsync(image, path, ct);
             product.ImagePath = path;
         }
@@ -141,7 +143,7 @@ public static class ProductController
     }
 
     public static async Task CreateAsync(
-        [FromForm] CreateUpdateProductDto data,
+        [AsParameters] CreateUpdateProductDto data,
         IFileProvider fileProvider,
         [FromServices] ProductCatalogDbContext dbContext,
         CancellationToken ct
@@ -154,7 +156,7 @@ public static class ProductController
                     Name = data.Name,
                     Description = data.Description,
                     Price = data.Price,
-                    ImagePath = null,
+                    ImagePath = data.ImagePath,
                     CustomAttributes = data.CustomAttributes,
                     Category =
                         data.CategoryId == null
@@ -175,7 +177,7 @@ public static class ProductController
             if (!image.IsImage(out var ext))
                 throw new BussinessException("Uploaded file is not an image");
 
-            var path = $"/file-storage/products/{product.Id}/packshot.{ext}";
+            var path = $"/file-storage/products/{product.Id}/packshot{ext}";
             await fileProvider.SaveAsync(image, path, ct);
             product.ImagePath = path;
         }
@@ -185,13 +187,13 @@ public static class ProductController
 
     public static async Task DeleteAsync(
         int id,
-      [FromServices] ProductCatalogDbContext dbContext,
-      CancellationToken ct
-  )
+        [FromServices] ProductCatalogDbContext dbContext,
+        CancellationToken ct
+    )
     {
         var product =
-           await dbContext.Products.FirstOrDefaultAsync(e => e.Id == id, cancellationToken: ct)
-           ?? throw new BussinessException($"Could not find product with id {id}");
+            await dbContext.Products.FirstOrDefaultAsync(e => e.Id == id, cancellationToken: ct)
+            ?? throw new BussinessException($"Could not find product with id {id}");
 
         dbContext.Products.Remove(product);
         await dbContext.SaveChangesAsync(ct);

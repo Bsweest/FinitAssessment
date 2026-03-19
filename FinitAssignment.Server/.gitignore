@@ -109,3 +109,5 @@ Generated_Code #added for RIA/Silverlight projects
 
 # JetBrains Rider's auto generated files
 .idea/
+
+wwwroot/file-storage/

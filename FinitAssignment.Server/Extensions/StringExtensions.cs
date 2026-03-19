@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 
-namespace FinitAssignment.Server.Extensions;
+namespace FinitAssignment.Extensions;
 
 public static class StringExtensions
 {

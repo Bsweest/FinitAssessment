@@ -1,6 +1,6 @@
 ﻿using System.Net.Mime;
 
-namespace FinitAssignment.Server.Extensions;
+namespace FinitAssignment.Extensions;
 
 public static class FormFileExtensions
 {

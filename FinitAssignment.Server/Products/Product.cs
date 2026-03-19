@@ -1,8 +1,8 @@
-﻿using FinitAssignment.Server.Categories;
-using FinitAssignment.Server.Extensions;
+﻿using FinitAssignment.Categories;
+using FinitAssignment.Extensions;
 using System.Diagnostics.CodeAnalysis;
 
-namespace FinitAssignment.Server.Products;
+namespace FinitAssignment.Products;
 
 public class Product : IAuditable, ISoftDelete
 {

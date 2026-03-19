@@ -1,9 +1,9 @@
-﻿using FinitAssignment.Server.Categories;
-using FinitAssignment.Server.EntityFrameworkCore;
-using FinitAssignment.Server.Products;
+﻿using FinitAssignment.Categories;
+using FinitAssignment.EntityFrameworkCore;
+using FinitAssignment.Products;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinitAssignment.Server.HostedServices;
+namespace FinitAssignment.HostedServices;
 
 public class SeedDataHost(IServiceScopeFactory scopeFactory) : IHostedService
 {
@@ -64,22 +64,6 @@ public class SeedDataHost(IServiceScopeFactory scopeFactory) : IHostedService
                 Description = "Candles, diffusers and room sprays",
                 IsActive = true,
                 DisplayOrder = 6,
-                ParentId = null,
-            },
-            new Category
-            {
-                Name = "Wall Decor",
-                Description = "Clocks, mirrors and wall-mounted accents",
-                IsActive = true,
-                DisplayOrder = 7,
-                ParentId = null,
-            },
-            new Category
-            {
-                Name = "Garden & Plants",
-                Description = "Planters, tools and outdoor living",
-                IsActive = true,
-                DisplayOrder = 8,
                 ParentId = null,
             },
         ];
@@ -176,7 +160,7 @@ public class SeedDataHost(IServiceScopeFactory scopeFactory) : IHostedService
                 Price = 134.00m,
                 ImagePath =
                     "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=600&q=80",
-                Category = categories[6],
+                Category = categories[5],
                 CustomAttributes =
                     """{"diameter":"30cm","movement":"Quartz","finish":"Brushed Brass"}""",
             },
@@ -208,7 +192,7 @@ public class SeedDataHost(IServiceScopeFactory scopeFactory) : IHostedService
                 Price = 67.00m,
                 ImagePath =
                     "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=600&q=80",
-                Category = categories[7],
+                Category = categories[3],
                 CustomAttributes = """{"set":"3 pieces","material":"Concrete","drainage":"Yes"}""",
             },
             new() {
@@ -227,7 +211,7 @@ public class SeedDataHost(IServiceScopeFactory scopeFactory) : IHostedService
                     "Hand-woven seagrass with leather handles. Flat base, 35cm diameter, 28cm tall.",
                 Price = 59.00m,
                 ImagePath = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
-                Category = categories[6],
+                Category = categories[2],
                 CustomAttributes = """{"diameter":"35cm","height":"28cm","material":"Seagrass"}""",
             },
             new() {

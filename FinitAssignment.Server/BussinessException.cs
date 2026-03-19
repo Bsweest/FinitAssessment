@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace FinitAssignment.Server;
+namespace FinitAssignment;
 
 public class BussinessException(string message) : Exception(message)
 {

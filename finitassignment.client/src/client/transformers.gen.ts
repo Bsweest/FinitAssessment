@@ -29,8 +29,13 @@ const productDtoSchemaResponseTransformer = (data: any) => {
     return data;
 };
 
+const getProductsDtoSchemaResponseTransformer = (data: any) => {
+    data.items = data.items.map((item: any) => productDtoSchemaResponseTransformer(item));
+    return data;
+};
+
 export const queryProductsResponseTransformer = async (data: any): Promise<QueryProductsResponse> => {
-    data = data.map((item: any) => productDtoSchemaResponseTransformer(item));
+    data = getProductsDtoSchemaResponseTransformer(data);
     return data;
 };
 

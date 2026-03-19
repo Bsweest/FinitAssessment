@@ -1,6 +1,6 @@
-﻿using FinitAssignment.Server.Extensions;
+﻿using FinitAssignment.Extensions;
 
-namespace FinitAssignment.Server.Categories;
+namespace FinitAssignment.Categories;
 
 public class Category : IAuditable
 {

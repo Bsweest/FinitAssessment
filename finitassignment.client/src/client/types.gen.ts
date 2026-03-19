@@ -6,8 +6,8 @@ export type ClientOptions = {
 
 export type CategoryDto = {
     id: number;
-    name: string | null;
-    description: string | null;
+    name: string;
+    description: string;
     isActive: boolean;
     displayOrder: number;
     parentId: number | null;
@@ -16,30 +16,26 @@ export type CategoryDto = {
 };
 
 export type CreateUpdateCategoryDto = {
-    name: string | null;
-    description: string | null;
+    name: string;
+    description: string;
     isActive: boolean;
     displayOrder: number;
     parentId: number | null;
 };
 
-export type CreateUpdateProductDto = {
-    name: string | null;
-    description: string | null;
-    price: number;
-    image: Blob | File | null;
-    categoryId: number | null;
-    customAttributes: string | null;
+export type GetProductsDto = {
+    count: number;
+    items: Array<ProductDto>;
 };
 
 export type ProductDto = {
     id: number;
-    name: string | null;
-    description: string | null;
+    name: string;
+    description: string;
     price: number;
     imagePath: string | null;
     category: CategoryDto;
-    customAttributes: string | null;
+    customAttributes: string;
     createdAt: Date;
     updatedAt: Date | null;
 };
@@ -113,12 +109,11 @@ export type QueryProductsData = {
     path?: never;
     query?: {
         page?: number;
-        name?: string;
         description?: string;
         minPrice?: number;
         maxPrice?: number;
         customAttributes?: string;
-        category?: string;
+        category?: number;
     };
     url: '/api/products';
 };
@@ -127,14 +122,20 @@ export type QueryProductsResponses = {
     /**
      * OK
      */
-    200: Array<ProductDto>;
+    200: GetProductsDto;
 };
 
 export type QueryProductsResponse = QueryProductsResponses[keyof QueryProductsResponses];
 
 export type CreateProductData = {
     body?: {
-        data: CreateUpdateProductDto;
+        name: string;
+        description: string;
+        price: number;
+        imagePath?: string;
+        Image?: Blob | File;
+        categoryId?: number;
+        customAttributes: string;
     };
     path?: never;
     query?: never;
@@ -184,7 +185,13 @@ export type GetProductResponse = GetProductResponses[keyof GetProductResponses];
 
 export type UpdateProductData = {
     body?: {
-        data: CreateUpdateProductDto;
+        name: string;
+        description: string;
+        price: number;
+        imagePath?: string;
+        Image?: Blob | File;
+        categoryId?: number;
+        customAttributes: string;
     };
     path: {
         id: number;

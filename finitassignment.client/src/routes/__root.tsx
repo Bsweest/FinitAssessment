@@ -10,7 +10,7 @@ const queryClient = new QueryClient();
 function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="p-2 flex gap-2 text-lg">
+      <div className="p-2 flex gap-5 text-lg">
         <Link
           to="/"
           activeProps={{
@@ -19,6 +19,16 @@ function RootComponent() {
           activeOptions={{ exact: true }}
         >
           Home
+        </Link>
+
+        <Link
+          to="/categories"
+          activeProps={{
+            className: "font-bold",
+          }}
+          activeOptions={{ exact: true }}
+        >
+          Categories
         </Link>
       </div>
       <hr />

@@ -63,6 +63,10 @@ export default defineConfig({
         target,
         secure: false,
       },
+      "^/file-storage": {
+        target,
+        secure: false,
+      },
     },
     port: parseInt(env.DEV_SERVER_PORT || "64757"),
     https: {

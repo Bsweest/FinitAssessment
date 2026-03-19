@@ -1,9 +1,9 @@
-﻿using FinitAssignment.Server.Categories;
-using FinitAssignment.Server.Products;
+﻿using FinitAssignment.Categories;
+using FinitAssignment.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace FinitAssignment.Server.EntityFrameworkCore;
+namespace FinitAssignment.EntityFrameworkCore;
 
 public class ProductCatalogDbContext(
     DbContextOptions<ProductCatalogDbContext> options,

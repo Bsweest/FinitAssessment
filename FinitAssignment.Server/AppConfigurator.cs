@@ -1,10 +1,10 @@
-﻿using FinitAssignment.Server.Categories;
-using FinitAssignment.Server.EntityFrameworkCore;
-using FinitAssignment.Server.HostedServices;
-using FinitAssignment.Server.Products;
+﻿using FinitAssignment.Categories;
+using FinitAssignment.EntityFrameworkCore;
+using FinitAssignment.HostedServices;
+using FinitAssignment.Products;
 using Serilog;
 
-namespace FinitAssignment.Server;
+namespace FinitAssignment;
 
 public static class AppConfigurator
 {
@@ -14,7 +14,10 @@ public static class AppConfigurator
     )
     {
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(options =>
+        {
+            options.SupportNonNullableReferenceTypes();
+        });
         services.AddSerilog();
         services.AddSqlServer<ProductCatalogDbContext>(
             configuration.GetConnectionString("Default")

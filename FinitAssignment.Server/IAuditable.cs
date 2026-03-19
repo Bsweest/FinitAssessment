@@ -1,4 +1,4 @@
-﻿namespace FinitAssignment.Server;
+﻿namespace FinitAssignment;
 
 public interface IAuditable
 {

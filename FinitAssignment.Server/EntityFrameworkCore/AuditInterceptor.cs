@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace FinitAssignment.Server.EntityFrameworkCore;
+namespace FinitAssignment.EntityFrameworkCore;
 
 public class AuditInterceptor(RequestContext requestContext) : SaveChangesInterceptor
 {

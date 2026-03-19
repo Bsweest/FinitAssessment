@@ -1,6 +1,6 @@
-﻿using FinitAssignment.Server.Categories;
+﻿using FinitAssignment.Categories;
 
-namespace FinitAssignment.Server.Products;
+namespace FinitAssignment.Products;
 
 public class ProductDto
 {

@@ -1,4 +1,4 @@
-﻿namespace FinitAssignment.Server;
+﻿namespace FinitAssignment;
 
 public interface IFileProvider
 {
@@ -7,7 +7,7 @@ public interface IFileProvider
 
 public class LocalFileProvider : IFileProvider
 {
-    private const string StoredOn = "/wwwroot/";
+    private const string StoredOn = "wwwroot/";
 
     private static string AbsolutePath(params string[] paths)
     {

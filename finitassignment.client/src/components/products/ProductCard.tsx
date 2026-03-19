@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ProductDto } from "../../client/types.gen";
 import { formatPrice } from "../../utils";
+import { Link } from "@tanstack/react-router";
 
 type Props = ProductDto & { index: number };
 
@@ -20,7 +21,9 @@ export function ProductCard({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div
+    <Link
+      to={`/products/$id`}
+      params={{ id: id }}
       className="group relative flex flex-col bg-[#1a1916] border border-[#2e2c28] overflow-hidden cursor-pointer"
       style={{
         animation: `fadeUp 0.5s ${index * 0.07}s both ease-out`,
@@ -107,6 +110,6 @@ export function ProductCard({
           </p>
         )}
       </div>
-    </div>
+    </Link>
   );
 }
